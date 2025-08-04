@@ -1,64 +1,6 @@
 # 华语影视演员合作网络数据 Chinese Cast Network
 
-[![License: MIT](http### 3. 基本使用
-```python
-from src import CastNetwork
-
-# 初始化网络分析器
-network = CastNetwork()
-
-# 加载数据
-network.load_data()
-
-# 方法1: 直接使用演员姓名（如果无重名）
-try:
-    actor_network = network.build_actor_network("周星驰")
-except ValueError as e:
-    print(f"处理重名: {e}")
-
-# 方法2: 处理重名情况
-# 1. 先获取所有同名演员
-actors = network.get_actors_by_name_with_selection("张伟")
-print(actors[['cast_name', 'cast_id', 'main_works']])
-
-# 2. 用户选择正确的cast_id
-selected_cast_id = actors.iloc[0]['cast_id']  # 用户选择
-
-# 3. 使用cast_id构建网络
-actor_network = network.build_actor_network_by_id(selected_cast_id)
-
-# 可视化网络
-network.visualize_network(actor_network)
-
-# 获取统计信息
-stats = network.get_network_stats(actor_network)
-print(stats)
-```
-
-### 4. 处理重名演员
-由于演员姓名可能存在重名情况，项目提供了专门的处理方法：
-
-```python
-# 检查是否存在重名
-actors = network.get_actors_by_name_with_selection("张伟")
-
-if len(actors) > 1:
-    print("发现重名演员，请选择:")
-    for idx, row in actors.iterrows():
-        print(f"{idx+1}. ID: {row['cast_id']} - 代表作: {row['main_works']}")
-    
-    # 用户选择后使用ID进行分析
-    selected_id = actors.iloc[0]['cast_id']  # 用户选择
-    
-    # 使用ID构建网络
-    network_graph = network.build_actor_network_by_id(selected_id)
-    
-    # 使用ID获取合作数据
-    collab_data = network.get_cast_collaboration_data_by_id(selected_id)
-    
-    # 使用ID获取合作频率
-    collaborations = network.get_collaboration_frequency_by_id(selected_id)
-```adge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380/)
 
 本项目提供华语影视演员合作网络数据和相关分析工具，可用于研究华语影视行业的合作关系和网络结构。
